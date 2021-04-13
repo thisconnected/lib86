@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 
@@ -8,9 +10,9 @@ namespace Lib86 {
 
   class Interpreter
   {
-    //pure virtual all instructions
-    virtual void RET(const Instruction&);
-    virtual void MOV_ax_imm16(const Instruction&);
+  public:
+    //virtual void INT(Instruction&);
+    void ADD_rm8_reg8(Instruction&);
   };
 
 
