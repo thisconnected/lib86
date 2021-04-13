@@ -55,6 +55,7 @@ dkms.conf
 *~
 resources/
 docs/
+build/
 *#*#*
 #gdb history
 .gdb
