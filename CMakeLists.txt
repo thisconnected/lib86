@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
-set(CMAKE_STATIC_LIBRARY_PREFIX "")
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
 
 
 
@@ -25,4 +25,5 @@ add_custom_target(run COMMAND ./emulator/emulator
 
 
 add_compile_options(-Wall)
+add_compile_options(-g)
 add_compile_options(-Wextra)

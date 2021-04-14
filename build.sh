@@ -4,8 +4,8 @@ set -o errexit
 rm -rf build
 mkdir build
 cd build
-cmake ..
-cmake --build .  --target emulator
-./emulator/emulator
+cmake .. -G Ninja
+ninja
+ninja run
 
 set +o errexit

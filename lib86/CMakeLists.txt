@@ -1,1 +1,1 @@
-add_library(lib86 SHARED cpu.cpp cpu.hpp interpreter.cpp interpreter.hpp disassembler.cpp disassembler.hpp)
+add_library(lib86 SHARED disassembler.cpp cpu.cpp interpreter.cpp )
