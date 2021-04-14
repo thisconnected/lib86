@@ -17,24 +17,25 @@ namespace Lib86 {
 
 
   opcode_entry opcode_entry[256];
-  
-  void build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&))
-  {
-    opcode_entry[op].opcode = op;
-    opcode_entry[op].mnemonic = mnemonic;
-    opcode_entry[op].handler = handler;
-  }
-
-  void build_opcode_table()
-  {
-    build(0x00, "ADD", &Interpreter::ADD_rm8_reg8);
-  }
 
   class Disassembler
   {
-    
+  private:
+    void build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&))
+    {
+      opcode_entry[op].opcode = op;
+      opcode_entry[op].mnemonic = mnemonic;
+      opcode_entry[op].handler = handler;
+    }
+    void build_opcode_table()
+    {
+      build(0x00, "ADD", &Interpreter::ADD_rm8_reg8);
+    }
+
     
   public:
+    Disassembler() {build_opcode_table();};
+    Instruction& getInstruction(); 
     void disassembleAtPoint(void * );
     void dumpInstruction(void *);
   };
