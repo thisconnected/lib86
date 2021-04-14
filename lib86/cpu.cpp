@@ -64,5 +64,39 @@ namespace Lib86
     
     return true;
   }
-  
+
+  void CPU::dumpmemory(u_int16_t offset, int bytes)
+  {
+    
+    auto * ptr = pointerAtOffset<uint8_t>(offset);
+
+    printf("dumpmemory %d bytes at 0x%x\n", bytes, offset);
+    for(int i = 0; i<bytes; i+=2)
+      {
+	if(i%8==0)
+	  std::cout << std::endl;
+	
+        printf("%04x ", (uint8_t)*ptr);
+	ptr++;
+      }
+  }
+
+  void CPU::fillMemAt(uint16_t offset, uint8_t fill , int bytes)
+  {
+    auto * ptr = pointerAtOffset<uint8_t>(offset);
+    
+    for(int i=0; i<bytes;i++)
+      {
+	*ptr = fill;
+	ptr++;
+      }
+  }
+
+  template <typename T> T* CPU::pointerAtOffset(uint16_t offset)
+  {
+    uint8_t * ptr = (uint8_t*) memory;
+    ptr+=offset;
+    printf("ptrAtOffset(): %p offset: 0x%x computed: %p\n", memory, offset, ptr);
+    return (T*) ptr;
+  }
 }
