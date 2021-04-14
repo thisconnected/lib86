@@ -19,11 +19,6 @@ namespace Lib86
     printf("ax:\t%x %x\nbx:\t%x %x\ncx:\t%x %x\ndx:\t%x %x\n",ah(),al(),bh(),bl(),ch(),cl(),dh(),dl());
   }
 
-  void * CPU::pointerAtAdress(uint16_t offset)
-  {
-    uint8_t * ptr = (uint8_t*)memory;
-    return (void *)ptr[offset];
-  }
 
   void CPU::example()
   {

@@ -67,16 +67,20 @@ namespace Lib86 {
     CPU();
     void dump();
     void dump(Instruction&);
-    void dumpmemory();
+    void dumpmemory(uint16_t offset, int bytes);
     void dumpbacktrace();
-    void next() {};
+    void next();
 
-    void * pointerAtAdress(uint16_t);
-  
-    void example();
     bool initdos(std::string filename);
-  
 
+    template <typename T> T* pointerAtOffset(uint16_t offset);
+
+
+    //DEBUG
+    void example();
+    void fillMemAt(uint16_t offset, uint8_t fill , int bytes);
+    //END_DEBUG
+   
     uint32_t ip() {return m_ip;}
 
     //GETTERS
