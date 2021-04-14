@@ -18,7 +18,7 @@ set($CMAKE_SOURCE_DIR .)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/lib86)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/emulator)
 
-add_custom_target(run COMMAND ./emulator/emulator
+add_custom_target(run COMMAND ninja &&./emulator/emulator
   USES_TERMINAL
   )
 
