@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <sys/mman.h>
 #include "cpu.hpp"
 
@@ -26,21 +27,34 @@ namespace Lib86
     m_ip = 15000;
     m_bx.low_u16 = 144;
     m_cx.low_u16 = 69;
-    initdos("../../tests/test.com");
+    initdos("../tests/test.com");
   }
   
   bool CPU::initdos(std::string filename)
   {
+    std::cout << "initdos\n";
     memory = malloc(64*1000);
     m_ip = 0x0100; //entry point
     if(memory==nullptr)
       return false;
     //here mmap the executable at 0100h for dos
-    /*
-    auto * file = fopen(filename.c_str(), "rb");
+
+    auto fd = open(filename.c_str(), O_RDONLY);
+    if(fd == -1)
+      {
+	perror("open");
+	return false;
+      }
     
-    auto pointer = mmap(NULL, 64, PROT_READ | PROT_WRITE, MAP_PRIVATE, file, 0);
-    */
+    auto pointer = mmap(pointerAtOffset<void>(ip()), 64*100, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+
+    if(pointer==MAP_FAILED)
+      {
+	perror("mmap");
+	return false;
+      }
+    
+    
     uint8_t * temp = (uint8_t*) memory;
     temp+=m_ip;
     for(int i=0; i<10;i++)
