@@ -69,7 +69,7 @@ namespace Lib86 {
     void dump(Instruction&);
     void dumpmemory();
     void dumpbacktrace();
-    void next() {disassembler.disassembleAtPoint(pointerAtAdress(ip()));};
+    void next() {};
 
     void * pointerAtAdress(uint16_t);
   

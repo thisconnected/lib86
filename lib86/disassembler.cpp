@@ -8,6 +8,7 @@ namespace Lib86 {
     uint8_t opcode = *(uint8_t*)memory;
     printf("op:%d mne:%s ", opcode_table[opcode].opcode, opcode_table[opcode].mnemonic);
   }
-  
+
+
 
 }

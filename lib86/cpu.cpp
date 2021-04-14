@@ -21,7 +21,7 @@ namespace Lib86
 
   void * CPU::pointerAtAdress(uint16_t offset)
   {
-    auto * ptr = (uint8_t*)memory;
+    uint8_t * ptr = (uint8_t*)memory;
     return (void *)ptr[offset];
   }
 
