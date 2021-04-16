@@ -5,6 +5,12 @@ namespace Lib86 {
 
   // here we build opcode table
 
+  enum operandModes
+    {
+      RM8_imm8 = 0,
+
+    };
+
   
 
   struct opcode_entry
@@ -37,7 +43,7 @@ namespace Lib86 {
     Disassembler() {build_opcode_table();};
     Instruction& getInstruction(); 
     void disassembleAtPoint(void * );
-    void dumpInstruction(void *);
+    void dumpInstruction(Instruction&);
   };
 
 

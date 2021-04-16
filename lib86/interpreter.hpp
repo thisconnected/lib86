@@ -1,11 +1,11 @@
 #pragma once
 
 #include <iostream>
+#include "instruction.hpp"
 
 
 namespace Lib86 {
 
-  class Instruction;
 
 
   class Interpreter

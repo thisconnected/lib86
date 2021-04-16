@@ -34,15 +34,15 @@ namespace Lib86 {
     divisibleRegister m_cx;
     divisibleRegister m_dx;
     //
-    uint16_t m_bp = 0;
-    uint16_t m_di = 0;
-    uint16_t m_si = 0;
-    uint16_t m_sp = 0;
+    staticRegister m_bp;
+    staticRegister m_di;
+    staticRegister m_si;
+    staticRegister m_sp;
     //bus interface unit
-    uint16_t m_cs = 0;
-    uint16_t m_es = 0;
-    uint16_t m_ss = 0;
-    uint16_t m_ds = 0;
+    staticRegister m_cs;
+    staticRegister m_es;
+    staticRegister m_ss;
+    staticRegister m_ds;
     //instruction point
     int16_t m_ip = 0;
 
