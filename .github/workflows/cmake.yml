@@ -1,6 +1,6 @@
-name: CMake
+name: build
 
-on: [push]
+on: [push, pull_request]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -43,7 +43,10 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: ninja
+      run: cmake --build .
+    - name: Run
+      working-directory: ${{github.workspace}}/build/
+      shell: ./emulator/emulator
     # - name: Test
     #   working-directory: ${{github.workspace}}/build
     #   shell: bash

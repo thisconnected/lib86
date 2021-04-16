@@ -1,5 +1,7 @@
 # Emulator 8086
 
+![Build](https://github.com/thisconnected/pracainzynierska/actions/workflows/cmake.yml/badge.svg)
+
 Emulator for Intel 8086 processor
 
 ## About
