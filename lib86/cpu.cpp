@@ -79,6 +79,7 @@ namespace Lib86
         printf("%04x ", (uint8_t)*ptr);
 	ptr++;
       }
+    //FIXME: bounds checking
   }
 
   void CPU::fillMemAt(uint16_t offset, uint8_t fill , int bytes)
@@ -90,7 +91,20 @@ namespace Lib86
 	*ptr = fill;
 	ptr++;
       }
+    //FIXME: bounds checking
   }
+  template <typename T> void CPU::writeAt(uint16_t offset, T input)
+  {
+    auto ptr = pointerAtOffset<T>(offset);
+
+    *ptr = input;
+    //FIXME: bounds checking
+  }
+  template <typename T> T CPU::readAt(uint16_t offset)
+  {
+    return *pointerAtOffset<T>(offset);
+    //FIXME: bounds checking
+  } 
 
   template <typename T> T* CPU::pointerAtOffset(uint16_t offset)
   {

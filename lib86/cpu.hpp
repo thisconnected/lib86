@@ -79,6 +79,8 @@ namespace Lib86 {
     //DEBUG
     void example();
     void fillMemAt(uint16_t offset, uint8_t fill , int bytes);
+    template <typename T> void writeAt(uint16_t offset, T input);
+    template <typename T> T readAt(uint16_t offset);
     //END_DEBUG
    
     uint32_t ip() {return m_ip;}
