@@ -93,24 +93,5 @@ namespace Lib86
       }
     //FIXME: bounds checking
   }
-  template <typename T> void CPU::writeAt(uint16_t offset, T input)
-  {
-    auto ptr = pointerAtOffset<T>(offset);
 
-    *ptr = input;
-    //FIXME: bounds checking
-  }
-  template <typename T> T CPU::readAt(uint16_t offset)
-  {
-    return *pointerAtOffset<T>(offset);
-    //FIXME: bounds checking
-  } 
-
-  template <typename T> T* CPU::pointerAtOffset(uint16_t offset)
-  {
-    uint8_t * ptr = (uint8_t*) memory;
-    ptr+=offset;
-    printf("ptrAtOffset(): %p offset: 0x%x computed: %p\n", memory, offset, ptr);
-    return (T*) ptr;
-  }
 }
