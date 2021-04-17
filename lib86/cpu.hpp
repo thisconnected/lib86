@@ -94,10 +94,10 @@ namespace Lib86 {
     uint8_t dl() {return m_dx.low_u8;}
     uint8_t dh() {return m_dx.high_u8;}
     //16bit GPR
-    u_int16_t ax() { return m_ax.low_u16;}
-    u_int16_t bx() { return m_bx.low_u16;}
-    u_int16_t cx() { return m_cx.low_u16;}
-    u_int16_t dx() { return m_dx.low_u16;}
+    uint16_t ax() { return m_ax.low_u16;}
+    uint16_t bx() { return m_bx.low_u16;}
+    uint16_t cx() { return m_cx.low_u16;}
+    uint16_t dx() { return m_dx.low_u16;}
 
   };
 
