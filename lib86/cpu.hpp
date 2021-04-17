@@ -34,15 +34,15 @@ namespace Lib86 {
     divisibleRegister m_cx;
     divisibleRegister m_dx;
     //
-    uint16_t m_bp = 0;
-    uint16_t m_di = 0;
-    uint16_t m_si = 0;
-    uint16_t m_sp = 0;
+    staticRegister m_bp;
+    staticRegister m_di;
+    staticRegister m_si;
+    staticRegister m_sp;
     //bus interface unit
-    uint16_t m_cs = 0;
-    uint16_t m_es = 0;
-    uint16_t m_ss = 0;
-    uint16_t m_ds = 0;
+    staticRegister m_cs;
+    staticRegister m_es;
+    staticRegister m_ss;
+    staticRegister m_ds;
     //instruction point
     int16_t m_ip = 0;
 
@@ -79,6 +79,8 @@ namespace Lib86 {
     //DEBUG
     void example();
     void fillMemAt(uint16_t offset, uint8_t fill , int bytes);
+    template <typename T> void writeAt(uint16_t offset, T input);
+    template <typename T> T readAt(uint16_t offset);
     //END_DEBUG
    
     uint32_t ip() {return m_ip;}
@@ -94,13 +96,32 @@ namespace Lib86 {
     uint8_t dl() {return m_dx.low_u8;}
     uint8_t dh() {return m_dx.high_u8;}
     //16bit GPR
-    u_int16_t ax() { return m_ax.low_u16;}
-    u_int16_t bx() { return m_bx.low_u16;}
-    u_int16_t cx() { return m_cx.low_u16;}
-    u_int16_t dx() { return m_dx.low_u16;}
+    uint16_t ax() { return m_ax.low_u16;}
+    uint16_t bx() { return m_bx.low_u16;}
+    uint16_t cx() { return m_cx.low_u16;}
+    uint16_t dx() { return m_dx.low_u16;}
 
   };
 
 
-  
+  template <typename T> void CPU::writeAt(uint16_t offset, T input)
+  {
+    auto ptr = pointerAtOffset<T>(offset);
+
+    *ptr = input;
+    //FIXME: bounds checking
+  }
+  template <typename T> T CPU::readAt(uint16_t offset)
+  {
+    return *pointerAtOffset<T>(offset);
+    //FIXME: bounds checking
+  } 
+
+  template <typename T> T* CPU::pointerAtOffset(uint16_t offset)
+  {
+    uint8_t * ptr = (uint8_t*) memory;
+    ptr+=offset;
+    printf("ptrAtOffset(): %p offset: 0x%x computed: %p\n", memory, offset, ptr);
+    return (T*) ptr;
+  }
 }

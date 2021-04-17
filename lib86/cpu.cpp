@@ -79,6 +79,7 @@ namespace Lib86
         printf("%04x ", (uint8_t)*ptr);
 	ptr++;
       }
+    //FIXME: bounds checking
   }
 
   void CPU::fillMemAt(uint16_t offset, uint8_t fill , int bytes)
@@ -90,13 +91,7 @@ namespace Lib86
 	*ptr = fill;
 	ptr++;
       }
+    //FIXME: bounds checking
   }
 
-  template <typename T> T* CPU::pointerAtOffset(uint16_t offset)
-  {
-    uint8_t * ptr = (uint8_t*) memory;
-    ptr+=offset;
-    printf("ptrAtOffset(): %p offset: 0x%x computed: %p\n", memory, offset, ptr);
-    return (T*) ptr;
-  }
 }

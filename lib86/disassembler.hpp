@@ -6,11 +6,13 @@
 
 namespace Lib86 {
 
+
   struct opcode_entry
   {
     uint8_t opcode;
     const char* mnemonic;
     void (Interpreter::*handler)(Instruction&);
+
     //need to get length of parameters and/or type here
   };
   
@@ -28,7 +30,7 @@ namespace Lib86 {
 
     void build_opcode_table()
     {
-      build(0x00, "ADD", &Interpreter::ADD_rm8_reg8);
+      build(0x00, "ADD", &Interpreter::ADD_byte);
     }
     
   public:
