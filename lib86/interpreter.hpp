@@ -12,7 +12,8 @@ namespace Lib86 {
   {
   public:
     //virtual void INT(Instruction&);
-    void ADD_rm8_reg8(Instruction&);
+    void ADD_byte(Instruction&);
+    void ADD_word(Instruction&);
   };
 
 

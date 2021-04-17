@@ -1,37 +1,37 @@
 #pragma once
+#include <iostream>
 
 namespace Lib86 {
   
-  enum reg_8 {
-    al = 0,
-    cl,
-    dl,
-    bl,
-    ah,
-    ch,
-    dh,
-    bh,
+
+  union wordOrBytePtr {
+    uint8_t * (*byte)(uint16_t);
+    uint16_t * (*word)(uint16_t);
   };
-  enum reg_16 {
-    ax = 0,
-    cx,
-    dx,
-    bx,
-    sp,
-    bp,
-    si,
-    di,
+
+  union wordOrByte {
+    uint8_t * (*byte)(uint16_t);
+    uint16_t * (*word)(uint16_t);
   };
-  enum rm_table1 {
-  };
-  enum rm_table2 {
-  };
-  
+
   
   class Instruction
   {
+  private:
+    const void * m_instruction_ptr;
+    wordOrBytePtr m_first;
+    wordOrBytePtr m_second;
+    //opcode_entry& m_opentry;
+    
   public:
-   bool direction();
+    Instruction(void * instptr) :
+      m_instruction_ptr(instptr) {};
+    
+    template <typename t> void writeFirstArgument(t input);
+    template <typename t> void writeSecondArgument(t input);
+    template <typename t> t readFirstArgument();
+    template <typename t> t readSecondArgument();
+    
   };
 
 
