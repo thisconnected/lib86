@@ -72,6 +72,7 @@ namespace Lib86 {
   public:
     CPU();
     void dump();
+    void dump_decimal();
     void dump(Instruction&);
     void dumpmemory(uint16_t offset, int bytes);
     void dumpbacktrace();

@@ -19,18 +19,33 @@ namespace Lib86
   
   void CPU::dump()
   {
-    printf("ip:\t%x\n",m_ip);
-    printf("   \th  l\n");
-    printf("ax:\t%x %x\nbx:\t%x %x\ncx:\t%x %x\ndx:\t%x %x\n",ah(),al(),bh(),bl(),ch(),cl(),dh(),dl());
+    printf("ip:\t%#x\n",m_ip);
+    printf("   \th  l\t\th l\n");
+    printf("ax:\t%02x %02x\t" "bp:\t%04x\n"
+	   "bx:\t%02x %02x\t" "di:\t%04x\n"
+	   "cx:\t%02x %02x\t" "si:\t%04x\n"
+	   "dx:\t%02x %02x\t" "sp:\t%04x\n",
+	   ah(),al(),bp(),bh(),bl(),di(),ch(),cl(),si(),dh(),dl(),sp());
+  }
+
+  void CPU::dump_decimal()
+  {
+    printf("ip:\t%d\n",m_ip);
+    printf("   \th   l\n");
+    printf("ax:\t%03d %d\t" "bp:\t%d\n"
+	   "bx:\t%03d %d\t" "di:\t%d\n"
+	   "cx:\t%03d %d\t" "si:\t%d\n"
+	   "dx:\t%03d %d\t" "sp:\t%d\n",
+	   ah(),al(),bp(),bh(),bl(),di(),ch(),cl(),si(),dh(),dl(),sp());
   }
 
 
   void CPU::example()
   {
-    m_ax.low_u16 = 50769;
-    m_ip = 15000;
-    m_bx.low_u16 = 144;
-    m_cx.low_u16 = 69;
+    set_ah(50);
+    set_bx(670);
+    set_cx(500);
+    set_dx(0xFFFF);
     initdos("../tests/test.com");
   }
   
@@ -75,14 +90,15 @@ namespace Lib86
     auto * ptr = pointerAtOffset<uint8_t>(offset);
 
     printf("dumpmemory %d bytes at 0x%x\n", bytes, offset);
-    for(int i = 0; i<bytes; i+=2)
+    for(int i = 0; i<bytes; i+=1)
       {
 	if(i%8==0)
 	  std::cout << std::endl;
 	
-        printf("%04x ", (uint8_t)*ptr);
+        printf("%02x ", (uint8_t)*ptr);
 	ptr++;
       }
+    std::cout << std::endl;
     //FIXME: bounds checking
   }
 
