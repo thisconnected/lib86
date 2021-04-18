@@ -26,9 +26,8 @@ namespace Lib86 {
     //opcode_entry& m_opentry;
     
   public:
-    Instruction(void * instptr) :
-      m_instruction_ptr(instptr) {};
-    
+    Instruction(void * instptr);
+    uint8_t byte(int index);
     template <typename t> void writeFirstArgument(t input);
     template <typename t> void writeSecondArgument(t input);
     template <typename t> t readFirstArgument();

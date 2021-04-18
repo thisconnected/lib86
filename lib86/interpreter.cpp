@@ -1,10 +1,12 @@
 #include "interpreter.hpp"
 #include "instruction.hpp"
+#include <stdio.h>
 
 namespace Lib86 {
 
 void Interpreter::ADD_byte(Instruction& insn)
 {
+  printf("Interpreter::ADD_byte(%p)\n", &insn);
   //FIXME: this is actually just for debugging
   uint8_t src1 = insn.readFirstArgument<uint8_t>();
   uint8_t src2 = insn.readSecondArgument<uint8_t>();
