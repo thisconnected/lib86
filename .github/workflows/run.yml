@@ -1,4 +1,4 @@
-name: build
+name: run
 
 on: [push, pull_request]
 
@@ -45,6 +45,10 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build .
       
+    - name: Run
+      working-directory: ${{github.workspace}}/build/
+      shell: bash
+      run: ./emulator/emulator
     # - name: Test
     #   working-directory: ${{github.workspace}}/build
     #   shell: bash
