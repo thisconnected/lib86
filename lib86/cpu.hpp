@@ -29,20 +29,26 @@ namespace Lib86 {
     Disassembler disassembler;
   
     //general purpose registers
-    divisibleRegister m_ax;
-    divisibleRegister m_bx;
-    divisibleRegister m_cx;
-    divisibleRegister m_dx;
+    struct {
+    divisibleRegister ax;
+    divisibleRegister bx;
+    divisibleRegister cx;
+    divisibleRegister dx;
+    } m_gpr;
     //
-    staticRegister m_bp;
-    staticRegister m_di;
-    staticRegister m_si;
-    staticRegister m_sp;
-    //bus interface unit
-    staticRegister m_cs;
-    staticRegister m_es;
-    staticRegister m_ss;
-    staticRegister m_ds;
+    struct {
+    staticRegister bp;
+    staticRegister di;
+    staticRegister si;
+    staticRegister sp;
+    } m_spr;
+    //segment registers
+    struct {
+    staticRegister cs;
+    staticRegister es;
+    staticRegister ss;
+    staticRegister ds;
+    } m_segr;
     //instruction point
     int16_t m_ip = 0;
 
@@ -83,26 +89,49 @@ namespace Lib86 {
     template <typename T> T readAt(uint16_t offset);
     //END_DEBUG
    
-    uint32_t ip() {return m_ip;}
+    uint16_t ip() {return m_ip;}
+    void set_ip(uint16_t input) {m_ip = input;}
 
     //GETTERS
     //8bit GPR
-    uint8_t al() {return m_ax.low_u8;}
-    uint8_t ah() {return m_ax.high_u8;}
-    uint8_t bl() {return m_bx.low_u8;}
-    uint8_t bh() {return m_bx.high_u8;}
-    uint8_t cl() {return m_cx.low_u8;}
-    uint8_t ch() {return m_cx.high_u8;}
-    uint8_t dl() {return m_dx.low_u8;}
-    uint8_t dh() {return m_dx.high_u8;}
+    uint8_t al() {return m_gpr.ax.low_u8;}
+    uint8_t ah() {return m_gpr.ax.high_u8;}
+    uint8_t bl() {return m_gpr.bx.low_u8;}
+    uint8_t bh() {return m_gpr.bx.high_u8;}
+    uint8_t cl() {return m_gpr.cx.low_u8;}
+    uint8_t ch() {return m_gpr.cx.high_u8;}
+    uint8_t dl() {return m_gpr.dx.low_u8;}
+    uint8_t dh() {return m_gpr.dx.high_u8;}
     //16bit GPR
-    uint16_t ax() { return m_ax.low_u16;}
-    uint16_t bx() { return m_bx.low_u16;}
-    uint16_t cx() { return m_cx.low_u16;}
-    uint16_t dx() { return m_dx.low_u16;}
+    uint16_t ax() { return m_gpr.ax.low_u16;}
+    uint16_t bx() { return m_gpr.bx.low_u16;}
+    uint16_t cx() { return m_gpr.cx.low_u16;}
+    uint16_t dx() { return m_gpr.dx.low_u16;}
+    //16bit special registers
+    uint16_t bp() { return m_spr.bp.low_u16;}
+    uint16_t di() { return m_spr.di.low_u16;}
+    uint16_t si() { return m_spr.si.low_u16;}
+    uint16_t sp() { return m_spr.sp.low_u16;}
+
+
+    //SETTERS
+    //8bit GPR
+    void set_al(uint8_t input) {m_gpr.ax.low_u8 = input;} //this set_al is awkward -> nested classes dont have access to members so we cant set.al()
+    void set_ah(uint8_t input) {m_gpr.ax.high_u8 = input;}
+    void set_bl(uint8_t input) {m_gpr.ax.low_u8 = input;}
+    void set_bh(uint8_t input) {m_gpr.ax.high_u8 = input;}
+    void set_cl(uint8_t input) {m_gpr.ax.low_u8 = input;}
+    void set_ch(uint8_t input) {m_gpr.ax.high_u8 = input;}
+    void set_dl(uint8_t input) {m_gpr.ax.low_u8 = input;}
+    void set_dh(uint8_t input) {m_gpr.ax.high_u8 = input;}
+    //16bit GPR
+    void set_ax(uint16_t input) {m_gpr.ax.low_u16 = input;}
+    void set_bx(uint16_t input) {m_gpr.bx.low_u16 = input;}
+    void set_cx(uint16_t input) {m_gpr.cx.low_u16 = input;}
+    void set_dx(uint16_t input) {m_gpr.dx.low_u16 = input;}
 
   };
-
+  //TEMPLATE
 
   template <typename T> void CPU::writeAt(uint16_t offset, T input)
   {

@@ -3,11 +3,15 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include "cpu.hpp"
+#include <assert.h>
+#define NDEBUG
 
 namespace Lib86
 {
 
-  CPU::CPU()
+  CPU::CPU() : m_gpr {},
+	       m_spr {},
+	       m_segr {}
   {
     printf("spawning cpu\n");
     example();
