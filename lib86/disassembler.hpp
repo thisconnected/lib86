@@ -6,35 +6,29 @@
 
 namespace Lib86 {
 
+  typedef void (Interpreter::*handler)(Instruction&); //wtf
+
 
   struct opcode_entry
   {
     uint8_t opcode;
     const char* mnemonic;
     void (Interpreter::*handler)(Instruction&);
-
-    //need to get length of parameters and/or type here
+    int size;
   };
   
   class Disassembler
   {
-     opcode_entry opcode_table[256];
+     opcode_entry * opcode_table;
   
   
-    void build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&))
-    {
-      opcode_table[op].opcode = op;
-      opcode_table[op].mnemonic = mnemonic;
-      opcode_table[op].handler = handler;
-    }
-
-    void build_opcode_table()
-    {
-      build(0x00, "ADD", &Interpreter::ADD_byte);
-    }
+    void build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&));
+    void build_opcode_table();
     
   public:
-    Disassembler() { build_opcode_table(); }
+    Disassembler();
+    ~Disassembler();
+    uint16_t run(uint16_t,void *, Interpreter&);
     void disassembleAtPoint(void *);
     void dumpInstruction(void *);
   };
