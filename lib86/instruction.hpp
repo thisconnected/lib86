@@ -50,7 +50,7 @@ namespace Lib86 {
     auto size = sizeof(t);
     uint8_t * input_ptr = &input;
     uint8_t * argument_ptr = (uint8_t*) m_first;
-    for(int i = 0; i<size; i++)
+    for(uint i = 0; i<size; i++)
       {
 	*input_ptr = *argument_ptr;
 	input_ptr++;
@@ -65,7 +65,7 @@ namespace Lib86 {
     auto size = sizeof(t);
     uint8_t * input_ptr = &input;
     uint8_t * argument_ptr = (uint8_t*) m_second;
-    for(int i = 0; i<size; i++)
+    for(uint i = 0; i<size; i++)
       {
 	*argument_ptr = *input_ptr;
 	input_ptr++;
@@ -82,7 +82,7 @@ namespace Lib86 {
     auto size = sizeof(t);
     uint8_t * output_ptr = &output;
     uint8_t * argument_ptr = (uint8_t*) m_first;
-    for(int i = 0; i<size; i++)
+    for(uint i = 0; i<size; i++)
       {
 	*output_ptr = *argument_ptr;
 	output_ptr++;
@@ -100,7 +100,7 @@ namespace Lib86 {
     auto size = sizeof(t);
     uint8_t * output_ptr = &output;
     uint8_t * argument_ptr = (uint8_t*) m_first;
-    for(int i = 0; i<size; i++)
+    for(uint i = 0; i<size; i++)
       {
 	*output_ptr = *argument_ptr;
 	output_ptr++;
