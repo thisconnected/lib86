@@ -4,7 +4,6 @@
 #include <sys/mman.h>
 #include "cpu.hpp"
 #include <assert.h>
-#define NDEBUG
 
 namespace Lib86
 {
