@@ -12,6 +12,7 @@ int main(int argc, char **argv)
   cpu.writeAt<uint8_t>(ip+1,0x16);
   printf("readAt 0x%2x = %d\nreadAt 0x%2x = %d\n", ip, cpu.readAt<uint8_t>(ip), ip+1, cpu.readAt<uint8_t>(ip+1));
   cpu.dumpmemory(ip,0x80);
+  cpu.next();
 
   return 0;
 }

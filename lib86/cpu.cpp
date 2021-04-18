@@ -113,4 +113,10 @@ namespace Lib86
     //FIXME: bounds checking
   }
 
+  void CPU::next()
+  {
+    auto value = disassembler.run(ip(),pointerAtOffset<void>(ip()),interpreter);
+    set_ip(value);
+  }
+
 }
