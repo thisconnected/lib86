@@ -44,6 +44,7 @@ namespace Lib86 {
   template <typename t>
   void Instruction::writeFirstArgument(t input)
   {
+    std::cout << "Instruction::writeFirstArgument(" << input << ")" << " to mem " << m_first  << std::endl;
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
     auto size = sizeof(t);
@@ -59,6 +60,7 @@ namespace Lib86 {
   template <typename t>
   void Instruction::writeSecondArgument(t input)
   {
+    std::cout << "Instruction::writeSecondArgument(" << input << ")" << " to mem " << m_second  << std::endl;
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
     auto size = sizeof(t);
@@ -75,6 +77,7 @@ namespace Lib86 {
   template <typename t>
   t Instruction::readFirstArgument()
   {
+    std::cout << "Instruction::readFirstArgument(" <<  ")" << " from mem " << m_first  << std::endl;
     t output;
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
@@ -93,6 +96,7 @@ namespace Lib86 {
   template <typename t>
   t Instruction::readSecondArgument()
   {
+    std::cout << "Instruction::readSecondArgument(" <<  ")" << " from mem " << m_second  << std::endl;
     t output;
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
