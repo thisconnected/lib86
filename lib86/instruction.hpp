@@ -21,13 +21,23 @@ namespace Lib86 {
   {
   private:
     const void * m_instruction_ptr;
-    wordOrBytePtr m_first;
-    wordOrBytePtr m_second;
+    wordOrBytePtr m_first = {};
+    wordOrBytePtr m_second = {};
     //opcode_entry& m_opentry;
     
+    //plumbing for finding operands
+
+    bool word() { return  *(uint8_t*)m_instruction_ptr & 0b10000000 ? true : false ;};
+    bool direction();
+    uint8_t mod();
+    uint8_t reg();
+    uint8_t rm();
+    void populate();
+    void* getRegister(uint8_t REG);
+
   public:
     Instruction(void * instptr);
-    uint8_t byte(int index);
+    uint8_t getByte(int index);
     template <typename t> void writeFirstArgument(t input);
     template <typename t> void writeSecondArgument(t input);
     template <typename t> t readFirstArgument();
