@@ -31,6 +31,12 @@ namespace Lib86 {
 	   "\thandler :\t%p\n",
 	   opcode, opcode_table[opcode].mnemonic, opcode & 1 ? "word" : "byte", opcode_table[opcode].handler);
 
+    if(!opcode_table[opcode].mnemonic)
+      {
+	fprintf(stderr,"at ip %#x unrecognized instruction with opcode %#x\n", ip, opcode);
+	fflush(stdout);
+	assert("Unregonized opcode" && false);
+      }
     auto funptr = opcode_table[opcode].handler;
     (interpreter.*funptr)(*insn);
     assert(false);
@@ -50,7 +56,10 @@ namespace Lib86 {
   void Disassembler::build_opcode_table()
     {
       build(0x00, "ADD", &Interpreter::ADD_byte);
+      build(0x02, "ADD", &Interpreter::ADD_byte);
       build(0x04, "ADD", &Interpreter::ADD_byte);
+      build(0x80, "ADD", &Interpreter::ADD_byte);
+      build(0xCD, "INT", &Interpreter::INT_byte);
     }
   void Disassembler::build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&))
     {

@@ -14,6 +14,7 @@ namespace Lib86 {
     //virtual void INT(Instruction&);
     void ADD_byte(Instruction&);
     void ADD_word(Instruction&);
+    void INT_byte(Instruction&);
   };
 
 

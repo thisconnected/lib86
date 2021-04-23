@@ -33,6 +33,11 @@ void Interpreter::ADD_byte(Instruction& insn)
 // }
 
 
+  void Interpreter::INT_byte(Instruction& insn)
+  {
+    auto interrupt_number = insn.getByte(1);
+    printf("Called interrupt number %#4x", interrupt_number);
+  }
 
 
 }
