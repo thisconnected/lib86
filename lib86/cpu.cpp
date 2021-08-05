@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include "cpu.hpp"
 #include <assert.h>
+#include "types.hpp"
 
 namespace Lib86
 {
@@ -51,7 +52,7 @@ namespace Lib86
   bool CPU::initdos(std::string filename)
   {
     std::cout << "initdos\n";
-    memory = malloc(64*1000);
+    memory = malloc(MAXMEM);
     m_ip = 0x0100; //entry point
     if(memory==nullptr)
       return false;
@@ -85,6 +86,9 @@ namespace Lib86
 
   void CPU::dumpmemory(u_int16_t offset, int bytes)
   {
+    if(offset+bytes>MAXMEM)
+      assert("out of bands dump");
+    
     
     auto * ptr = pointerAtOffset<uint8_t>(offset);
 
@@ -98,11 +102,14 @@ namespace Lib86
 	ptr++;
       }
     std::cout << std::endl;
-    //FIXME: bounds checking
+
   }
 
   void CPU::fillMemAt(uint16_t offset, uint8_t fill , int bytes)
   {
+    if(offset+bytes>MAXMEM)
+      assert("out of bands dump");
+    
     auto * ptr = pointerAtOffset<uint8_t>(offset);
     
     for(int i=0; i<bytes;i++)
@@ -110,7 +117,6 @@ namespace Lib86
 	*ptr = fill;
 	ptr++;
       }
-    //FIXME: bounds checking
   }
 
   void CPU::next()
