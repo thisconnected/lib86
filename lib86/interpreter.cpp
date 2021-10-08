@@ -14,9 +14,9 @@ void Interpreter::ADD_byte(Instruction& insn)
   //FIXME: update flags
   uint8_t dest = src1 + src2;
 
-  printf("ADD %d + %d = %d ", src1,src2,dest);
+  printf("\tADD %d + %d = %d\n", src1,src2,dest);
   insn.writeFirstArgument<uint8_t>(dest);
-
+  printf("\tdone ADD_byte()\n");
 }
   
 // void Interpreter::ADD_word(Instruction& insn)

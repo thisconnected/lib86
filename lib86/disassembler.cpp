@@ -39,7 +39,7 @@ namespace Lib86 {
       }
     auto funptr = opcode_table[opcode].handler;
     (interpreter.*funptr)(*insn);
-    assert(false);
+    //assert(false);
 
     if(opcode & 0b10000000)
       printf("calling %s with %d %d", opcode_table[opcode].mnemonic, insn->readFirstArgument<uint8_t>(),insn->readSecondArgument<uint8_t>());
