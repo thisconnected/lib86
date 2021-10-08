@@ -7,6 +7,8 @@
 
 namespace Lib86 {
 
+  class Instruction;
+
   union divisibleRegister //useful later for 32bit
   {
     struct {
@@ -95,24 +97,24 @@ namespace Lib86 {
 
     //GETTERS
     //8bit GPR
-    uint8_t al() {return m_gpr.ax.low_u8;}
-    uint8_t ah() {return m_gpr.ax.high_u8;}
-    uint8_t bl() {return m_gpr.bx.low_u8;}
-    uint8_t bh() {return m_gpr.bx.high_u8;}
-    uint8_t cl() {return m_gpr.cx.low_u8;}
-    uint8_t ch() {return m_gpr.cx.high_u8;}
-    uint8_t dl() {return m_gpr.dx.low_u8;}
-    uint8_t dh() {return m_gpr.dx.high_u8;}
+    uint8_t * al() {return &m_gpr.ax.low_u8;}
+    uint8_t * ah() {return &m_gpr.ax.high_u8;}
+    uint8_t * bl() {return &m_gpr.bx.low_u8;}
+    uint8_t * bh() {return &m_gpr.bx.high_u8;}
+    uint8_t * cl() {return &m_gpr.cx.low_u8;}
+    uint8_t * ch() {return &m_gpr.cx.high_u8;}
+    uint8_t * dl() {return &m_gpr.dx.low_u8;}
+    uint8_t * dh() {return &m_gpr.dx.high_u8;}
     //16bit GPR
-    uint16_t ax() { return m_gpr.ax.low_u16;}
-    uint16_t bx() { return m_gpr.bx.low_u16;}
-    uint16_t cx() { return m_gpr.cx.low_u16;}
-    uint16_t dx() { return m_gpr.dx.low_u16;}
+    uint16_t * ax() { return &m_gpr.ax.low_u16;}
+    uint16_t * bx() { return &m_gpr.bx.low_u16;}
+    uint16_t * cx() { return &m_gpr.cx.low_u16;}
+    uint16_t * dx() { return &m_gpr.dx.low_u16;}
     //16bit special registers
-    uint16_t bp() { return m_spr.bp.low_u16;}
-    uint16_t di() { return m_spr.di.low_u16;}
-    uint16_t si() { return m_spr.si.low_u16;}
-    uint16_t sp() { return m_spr.sp.low_u16;}
+    uint16_t * bp() { return &m_spr.bp.low_u16;}
+    uint16_t * di() { return &m_spr.di.low_u16;}
+    uint16_t * si() { return &m_spr.si.low_u16;}
+    uint16_t * sp() { return &m_spr.sp.low_u16;}
 
 
     //SETTERS

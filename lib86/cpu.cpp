@@ -8,12 +8,14 @@
 
 namespace Lib86
 {
+  CPU * Instruction::fakeCPU = nullptr;
 
   CPU::CPU() : m_gpr {},
 	       m_spr {},
 	       m_segr {}
   {
     printf("spawning cpu\n");
+    Instruction::fakeCPU = this;
     example();
   }
   
@@ -25,7 +27,7 @@ namespace Lib86
 	   "bx:\t%02x %02x\t" "di:\t%04x\n"
 	   "cx:\t%02x %02x\t" "si:\t%04x\n"
 	   "dx:\t%02x %02x\t" "sp:\t%04x\n",
-	   ah(),al(),bp(),bh(),bl(),di(),ch(),cl(),si(),dh(),dl(),sp());
+	   *ah(),*al(),*bp(),*bh(),*bl(),*di(),*ch(),*cl(),*si(),*dh(),*dl(),*sp());
   }
 
   void CPU::dump_decimal()
@@ -36,16 +38,16 @@ namespace Lib86
 	   "bx:\t%03d %d\t" "di:\t%d\n"
 	   "cx:\t%03d %d\t" "si:\t%d\n"
 	   "dx:\t%03d %d\t" "sp:\t%d\n",
-	   ah(),al(),bp(),bh(),bl(),di(),ch(),cl(),si(),dh(),dl(),sp());
+	   *ah(),*al(),*bp(),*bh(),*bl(),*di(),*ch(),*cl(),*si(),*dh(),*dl(),*sp());
   }
 
 
   void CPU::example()
   {
     set_ah(50);
-    set_bx(670);
+    set_bx(0xFFFF);
     set_cx(500);
-    set_dx(0xFFFF);
+    set_dx(0x1234);
     initdos("../tests/test.com");
   }
   
