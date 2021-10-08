@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <iostream>
 #include <bitset>
+#include "cpu.hpp"
 
 namespace Lib86 {
 
@@ -85,6 +86,7 @@ namespace Lib86 {
   }
   void * Instruction::getRegister(uint8_t REG)
   {
+    void * retval = (void*) 0x1337;
     //HACK: this just displays instead of getting the correct pointer
     std::cout << "\tInstruction::getRegister(" << std::bitset<8>(REG) << ")" << std::endl << "\t";
 
@@ -95,28 +97,36 @@ namespace Lib86 {
       {
       case AL:
 	std::cout << "\tREG "<< std::bitset<3>(REG) << " = AL" << std::endl;
+	retval = fakeCPU->al();
 	break;
       case CL:
 	std::cout << "\tREG "<< std::bitset<3>(REG) << " = CL" << std::endl;
+	retval = fakeCPU->cl();
 	break;
       case DL:
 	std::cout << "\tREG "<< std::bitset<3>(REG) << " = DL" << std::endl;
+	retval = fakeCPU->dl();
 	break;
       case BL:
-	std::cout << "\tREG "<< std::bitset<3>(REG) << " = DL" << std::endl;
+	std::cout << "\tREG "<< std::bitset<3>(REG) << " = BL" << std::endl;
+	retval = fakeCPU->bl();
 	break;
 
       case AH:
 	std::cout << "\tREG "<< std::bitset<3>(REG) << " = AH" << std::endl;
+	retval = fakeCPU->ah();
 	break;
       case CH:
 	std::cout << "\tREG "<< std::bitset<3>(REG) << " = CH" << std::endl;
+	retval = fakeCPU->ch();
 	break;
       case DH:
 	std::cout << "\tREG "<< std::bitset<3>(REG) << " = DH" << std::endl;
+	retval = fakeCPU->dh();
 	break;
       case BH:
 	std::cout << "\tREG "<< std::bitset<3>(REG) << " = BH" << std::endl;
+	retval = fakeCPU->bh();
 	break;
 
       default:
@@ -124,7 +134,7 @@ namespace Lib86 {
       }
 
 
-    return (void*) 0x1337;
+    return retval;
   }
 
 }
