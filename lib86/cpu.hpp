@@ -64,6 +64,7 @@ namespace Lib86 {
     void dump_decimal();
     void dump(Instruction&);
     void dumpmemory(uint16_t offset, int bytes);
+    void dumpflags();
     void dumpbacktrace();
     void next();
 

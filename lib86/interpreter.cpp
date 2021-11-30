@@ -5,44 +5,53 @@
 #include "flags.hpp"
 #include <limits>
 #include "interrupt.hpp"
+#include <assert.h>
 
 namespace Lib86 {
 
-  template <typename t> inline void flags_add(uint16_t flags, t first, t second)
+  template <typename t> inline void flags_add(uint16_t* flags, t first, t second)
   {
+    printf("\tflags_add(%d, %d)\n",first,second);
+    //TODO
+    *flags = 0x0; //should clean only arithmetic flags
+
     if((first+second)==0)
-      flags &= FLAG_ZERO;
+	*flags = *flags | FLAG_ZERO;
     t diff = std::numeric_limits<t>::max() - first;
     if(diff < second)
-      flags &= FLAG_OVERFLOW;
+      *flags |= FLAG_OVERFLOW;
+    if((first+second) < 0)
+      *flags |= FLAG_SIGN;
+    fflush(stdout);
+
+    printf("flags: %#x\n", *flags);
   }
 
 void Interpreter::ADD_byte(Instruction& insn)
 {
   printf("Interpreter::ADD_byte(%p)\n", &insn);
-  uint8_t src1 = insn.readFirstArgument<int8_t>();
-  uint8_t src2 = insn.readSecondArgument<int8_t>();
+  int8_t src1 = insn.readFirstArgument<int8_t>();
+  int8_t src2 = insn.readSecondArgument<int8_t>();
 
-  //FIXME: update flags
-  uint8_t dest = src1 + src2;
+  int8_t dest = src1 + src2;
 
+  flags_add<int8_t>(insn.fakeCPU->flags(), src1 ,src2);
   printf("\tADD %d + %d = %d\n", src1,src2,dest);
-  printf("\tADD 0x%x + 0x%x = 0x%x\n", src1,src2,dest);
+
   insn.writeFirstArgument<uint8_t>(dest);
-  printf("\tdone ADD_byte()\n");
 }
+
   
 void Interpreter::ADD_word(Instruction& insn)
 {
   printf("Interpreter::ADD_word(%p)\n", &insn);
   //FIXME: this is actually just for debugging
-  uint16_t src1 = insn.readFirstArgument<int16_t>();
-  uint16_t src2 = insn.readSecondArgument<int16_t>();
+  int16_t src1 = insn.readFirstArgument<int16_t>();
+  int16_t src2 = insn.readSecondArgument<int16_t>();
 
-  //FIXME: update flags
-  uint16_t dest = src1 + src2;
+  int16_t dest = src1 + src2;
 
-  flags_add<int16_t>(*insn.fakeCPU->flags(), src1, src2);
+  flags_add<int16_t>(insn.fakeCPU->flags(), src1, src2);
 
   printf("ADD %d + %d = %d ", src1,src2,dest);
   insn.writeFirstArgument<uint16_t>(dest);

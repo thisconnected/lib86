@@ -5,6 +5,7 @@
 #include "cpu.hpp"
 #include <assert.h>
 #include "types.hpp"
+#include "flags.hpp"
 
 namespace Lib86
 {
@@ -28,6 +29,7 @@ namespace Lib86
 	   "cx:\t%02x %02x\t" "si:\t%04x\n"
 	   "dx:\t%02x %02x\t" "sp:\t%04x\n",
 	   *ah(),*al(),*bp(),*bh(),*bl(),*di(),*ch(),*cl(),*si(),*dh(),*dl(),*sp());
+    dumpflags();
   }
 
   void CPU::dump_decimal()
@@ -39,6 +41,13 @@ namespace Lib86
 	   "cx:\t%03d %d\t" "si:\t%d\n"
 	   "dx:\t%03d %d\t" "sp:\t%d\n",
 	   *ah(),*al(),*bp(),*bh(),*bl(),*di(),*ch(),*cl(),*si(),*dh(),*dl(),*sp());
+    dumpflags();
+  }
+
+  void CPU::dumpflags()
+  {
+    printf("flags: %d%d%d%d%d\n"
+	   "flags: CPZSO\n", flags_reg & FLAG_CARRY, flags_reg & FLAG_PARITY ? true : false,flags_reg & FLAG_ZERO ? true : false ,flags_reg & FLAG_SIGN ? true : false,flags_reg & FLAG_OVERFLOW ? true : false );
   }
 
 
