@@ -124,6 +124,7 @@ namespace Lib86
   void CPU::next()
   {
     auto value = disassembler.run(ip(),pointerAtOffset<void>(ip()),interpreter);
+    printf("CPU::next() setting ip to %x\n", value);
     set_ip(value);
   }
 

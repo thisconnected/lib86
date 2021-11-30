@@ -44,6 +44,7 @@ namespace Lib86 {
     template <typename t> void writeSecondArgument(t input);
     template <typename t> t readFirstArgument();
     template <typename t> t readSecondArgument();
+    uint size = 1;
 
     void test() {
       *m_first = 0xFF00;
@@ -60,10 +61,10 @@ namespace Lib86 {
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
     auto size = sizeof(t);
-    uint8_t * input_ptr = &input;
-    uint8_t * argument_ptr = (uint8_t*) m_first;
-    printf("\targument_ptr=%p\n",argument_ptr);
-    printf("\t*argument_ptr=%d\n",*argument_ptr);
+    uint8_t * input_ptr =  (uint8_t*)&input;
+     uint8_t * argument_ptr = (uint8_t*) m_first;
+    //printf("\targument_ptr=%p\n",argument_ptr);
+    //printf("\t*argument_ptr=%d\n",*argument_ptr);
     for(uint i = 0; i<size; i++)
       {
 	*argument_ptr = *input_ptr;
@@ -78,7 +79,7 @@ namespace Lib86 {
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
     auto size = sizeof(t);
-    uint8_t * input_ptr = &input;
+    uint8_t * input_ptr = (uint8_t*) &input;
     uint8_t * argument_ptr = (uint8_t*) m_second;
     for(uint i = 0; i<size; i++)
       {
@@ -96,7 +97,7 @@ namespace Lib86 {
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
     auto size = sizeof(t);
-    uint8_t * output_ptr = &output;
+    uint8_t * output_ptr = (uint8_t*) &output;
     uint8_t * argument_ptr = (uint8_t*) m_first;
     for(uint i = 0; i<size; i++)
       {
@@ -115,7 +116,7 @@ namespace Lib86 {
     //HACK: think about real way to do it later 
     // u16 -> u8 casting is -fpermissive prolly with bitshifts?
     auto size = sizeof(t);
-    uint8_t * output_ptr = &output;
+    uint8_t * output_ptr = (uint8_t*) &output;
     uint8_t * argument_ptr = (uint8_t*) m_second;
     for(uint i = 0; i<size; i++)
       {

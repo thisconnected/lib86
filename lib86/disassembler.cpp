@@ -35,15 +35,15 @@ namespace Lib86 {
       {
 	fprintf(stderr,"at ip %#x unrecognized instruction with opcode %#x\n", ip, opcode);
 	fflush(stdout);
-	assert("Unregonized opcode" && false);
+	assert("Unrecogonized opcode" && false);
       }
-    auto funptr = opcode_table[opcode].handler;
+    auto funptr = opcode_table[opcode].handler; //this needs to actually ignore direction bit (we do that internally in instruction
     (interpreter.*funptr)(*insn);
     //assert(false);
 
     if(opcode & 0b10000000)
-      printf("calling %s with %d %d", opcode_table[opcode].mnemonic, insn->readFirstArgument<uint8_t>(),insn->readSecondArgument<uint8_t>());
-    return ip+opcode_table[opcode].size;
+      printf("calling %s with %d %d\n", opcode_table[opcode].mnemonic, insn->readFirstArgument<uint8_t>(),insn->readSecondArgument<uint8_t>());
+    return ip+insn->size;
   }
 
   void Disassembler::disassembleAtPoint(void * memory)
