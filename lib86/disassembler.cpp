@@ -64,17 +64,19 @@ namespace Lib86 {
     {
       build(0x00, "ADD", &Interpreter::ADD_byte);
       build(0x02, "ADD", &Interpreter::ADD_byte);
-      build(0x04, "ADD", &Interpreter::ADD_byte);
+      //      build(0x04, "ADD", &Interpreter::ADD_byte);
       // build(0x50, "PUSH", &Interpreter::PUSH_word); //PUSH REG only
       // build(0x5a, "POP", &Interpreter::POP_word); //POP REG only
-      build(0x80, "ADD", &Interpreter::ADD_byte);
-      build(0x8a, "MOV", &Interpreter::MOV_byte);
-      build(0x8b, "MOV", &Interpreter::MOV_word);
-      build(0x88, "MOV", &Interpreter::MOV_byte);
-      build(0x89, "MOV", &Interpreter::MOV_word);
+      build(0x80, "ADD imm8", &Interpreter::ADD_byte,imm8);
+      build(0xC6, "MOV imm8", &Interpreter::MOV_byte,imm8);
+      build(0xC7, "MOV imm16", &Interpreter::MOV_word,imm16);
+      build(0xC6, "MOV", &Interpreter::MOV_byte);
+      build(0xC7, "MOV", &Interpreter::MOV_word);
       build(0x8f, "POP", &Interpreter::POP_word);
       build(0xff, "PUSH", &Interpreter::PUSH_word);
       build(0xCD, "INT", &Interpreter::INT_byte);
+      build(0x74, "JE", &Interpreter::JE);
+      build(0x75, "JNE", &Interpreter::JNE);
     }
   void Disassembler::build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&))
     {
