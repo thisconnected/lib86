@@ -13,7 +13,7 @@ namespace Lib86 {
 
     switch (service)
       {
-      case 0x01:
+      case 0x0:
 	interrupt_sysexit();
 	break;
 

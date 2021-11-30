@@ -7,7 +7,7 @@
 #define FLAG_ADJUST 0x0010
 #define FLAG_BIT_5
 #define FLAG_ZERO 0x0040
-#define FLAG_SING 0x0080
+#define FLAG_SIGN 0x0080
 #define FLAG_TRAP 0x0100
 #define FLAG_INTERRUPT 0x0200
 #define FLAG_DIRECTION 0x0400
