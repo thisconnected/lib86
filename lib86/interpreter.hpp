@@ -24,6 +24,8 @@ namespace Lib86 {
     void MOV_byte(Instruction&);
     void XOR_byte(Instruction&);
     void CMP_byte(Instruction&);
+    void JE(Instruction&);
+    void JNE(Instruction&);
   };
 
 

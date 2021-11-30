@@ -117,10 +117,46 @@ void Interpreter::ADD_word(Instruction& insn)
   void Interpreter::CMP_byte(Instruction& insn)
   {
     //TODO
+    assert("unimplemented instruction" && false);
   }
   void Interpreter::MOV_byte(Instruction& insn)
   {
-    //TODO
+    printf("Interpreter::MOV_byte(%p)\n", &insn);
+    uint8_t src = insn.readFirstArgument<uint8_t>();
+    printf("\tmoving %#x\n",src);
+
+    insn.writeSecondArgument<uint8_t>(src);
+  }
+
+  void Interpreter::JE(Instruction& insn)
+  {
+    printf("Interpreter::JE(%p)\n", &insn);
+    if(*insn.fakeCPU->flags() & FLAG_ZERO)
+      {
+	auto ip = insn.fakeCPU->ip();
+	ip += insn.getByte(1);
+
+	printf("\tPrevious ip = %#x, new = %#x\n", insn.fakeCPU->ip(), ip);
+	printf("\tjump of %d bytes\n", insn.getByte(1));
+	insn.fakeCPU->set_ip(ip);
+      }
+    //HACK
+    insn.size = 2;
+  }
+  void Interpreter::JNE(Instruction& insn)
+  {
+    printf("Interpreter::JNE(%p)\n", &insn);
+    if(!(*insn.fakeCPU->flags() & FLAG_ZERO))
+      {
+	auto ip = insn.fakeCPU->ip();
+	ip += insn.getByte(1);
+
+	printf("\tPrevious ip = %#x, new = %#x\n", insn.fakeCPU->ip(), ip);
+	printf("\tjump of %d bytes\n", insn.getByte(1));
+	insn.fakeCPU->set_ip(ip);
+      }
+    //HACK
+    insn.size = 2;
   }
 
 
