@@ -30,27 +30,51 @@ void test(Lib86::CPU * cpu)
   auto ip = cpu->ip();
   //ADD DL, 16h
   cpu->writeAt<uint8_t>(ip,0x80);
-  cpu->writeAt<uint8_t>(ip+1,0xc2);
-  cpu->writeAt<uint8_t>(ip+2,0x16);
+  cpu->writeAt<uint8_t>(++ip,0xc2);
+  cpu->writeAt<uint8_t>(++ip,0x16);
   //ADD DL, CH
-  cpu->writeAt<uint8_t>(ip+5,0x02);
-  cpu->writeAt<uint8_t>(ip+6,0xD5);
-  //ADD AL, BH
-  cpu->writeAt<uint8_t>(ip+7,0x02);
-  cpu->writeAt<uint8_t>(ip+8,0xc7);
+  cpu->writeAt<uint8_t>(++ip,0x02);
+  cpu->writeAt<uint8_t>(++ip,0xD5);
 
-  cpu->set_ip(ip+7);
+  //ADD DL, CH
+  cpu->writeAt<uint8_t>(++ip,0x02);
+  cpu->writeAt<uint8_t>(++ip,0xD5);
+  //ADD AL, BH
+  cpu->writeAt<uint8_t>(++ip,0x02);
+  cpu->writeAt<uint8_t>(++ip,0xc7);
+
+  cpu->set_ip(0x100);
 
 
   //POP AX
-  cpu->writeAt<uint8_t>(ip+9,0x8f);
-  cpu->writeAt<uint8_t>(ip+10,0xc0);
+  cpu->writeAt<uint8_t>(++ip,0x8f);
+  cpu->writeAt<uint8_t>(++ip,0xc0);
   //ADD AH, CH
-  cpu->writeAt<uint8_t>(ip+11,0x02);
-  cpu->writeAt<uint8_t>(ip+12,0xe5);
+  cpu->writeAt<uint8_t>(++ip,0x02);
+  cpu->writeAt<uint8_t>(++ip,0xe5);
+  //MOV DL, 69h
+  cpu->writeAt<uint8_t>(++ip,0xc6);
+  cpu->writeAt<uint8_t>(++ip,0xD5);
+  cpu->writeAt<uint8_t>(++ip,0x69);
+  //MOV AH, 0h
+  cpu->writeAt<uint8_t>(++ip,0xc6);
+  cpu->writeAt<uint8_t>(++ip,0xE4);
+  cpu->writeAt<uint8_t>(++ip,0x0);
+  //ADD AH, 0h
+  cpu->writeAt<uint8_t>(++ip,0x80);
+  cpu->writeAt<uint8_t>(++ip,0xE4);
+  cpu->writeAt<uint8_t>(++ip,0x0);
+  //JE 3d
+  cpu->writeAt<uint8_t>(++ip,0x74);
+  cpu->writeAt<uint8_t>(++ip,0x3);
+  //ADD AH, 0h
+  cpu->writeAt<uint8_t>(++ip,0x80);
+  cpu->writeAt<uint8_t>(++ip,0xE4);
+  cpu->writeAt<uint8_t>(++ip,0x0);
+  
   //int 21h
-  cpu->writeAt<uint8_t>(ip+13, 0xCD);
-  cpu->writeAt<uint8_t>(ip+14, 0x21);
+  cpu->writeAt<uint8_t>(++ip, 0xCD);
+  cpu->writeAt<uint8_t>(++ip, 0x21);
 
 }
 
