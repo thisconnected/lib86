@@ -44,6 +44,7 @@ namespace Lib86
 
   void CPU::example()
   {
+    m_spr.sp.low_u16 = 0xff00;
     set_ah(50);
     set_bx(0xFFFF);
     set_cx(500);
