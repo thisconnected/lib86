@@ -28,6 +28,31 @@ namespace Lib86 {
     return *byte;
   }
 
+  void Instruction::work_imm()
+  {
+    printf("Instruction::work_imm() setting up immidiate value of ");
+    if(imm == imm8)
+      {
+	size+=1;
+	imm_value.low_u8 = getByte(size-1);
+	m_first = (uint16_t*) &imm_value.low_u8;
+	printf("imm8 = %#x\n", imm_value.low_u8);
+      }
+    else
+      { //this is stupid
+	size+=2;
+	imm_value.low_u8 = getByte(size-1);
+	imm_value.high_u8 = getByte(size-2);
+	m_first = (uint16_t*) &imm_value.low_u16;
+	printf("imm16 = %#x\n", imm_value.low_u16);
+      }
+    //printf(" at location of %p\n", m_second);
+
+    // printf("wtf is at %p,  imm8 = %x,imm16 = %x\n", m_second, *m_second, (uint8_t) *m_second );
+
+    // printf("bytes what %#x %#x %#x\n", getByte(size-2),getByte(size-1),getByte(size));
+  }
+
   bool Instruction::direction()
   {
 
@@ -40,37 +65,41 @@ namespace Lib86 {
   {
     auto opcode = getByte(1);
     auto retval = (opcode & 0b11000000) >> 6;
-    std::cout << "\tmod() " << std::bitset<8>(retval) << std::endl;
+    std::cout << "\tmod() " << std::bitset<2>(retval) << std::endl;
     return retval;
   }
   uint8_t Instruction::reg()
   {
     auto opcode = getByte(1);
     auto retval =  (opcode & 0b00111000) >> 3;
-    std::cout << "\treg() " << std::bitset<8>(retval) << std::endl;
+    std::cout << "\treg() " << std::bitset<3>(retval) << std::endl;
     return retval;
   }
   uint8_t Instruction::rm()
   {
     auto opcode = getByte(1);
     auto retval =  opcode & 0b00000111;
-    std::cout << "\trm() " << std::bitset<8>(retval) << std::endl;
+    std::cout << "\trm() " << std::bitset<3>(retval) << std::endl;
     return retval;
   }
 
   void Instruction::populate()
   {
     std::cout << "Instruction::populate()" << std::endl;
+
+
+    printf("\ndebug: %x %x %x %x %x %x %x\n", getByte(0), getByte(1),getByte(2),getByte(3),getByte(4),getByte(5),getByte(6)); 
     auto m_mod = mod();
     switch(m_mod)
       {
       case RM_TABLE_1:
 	printf ("\tMOD = RM_TABLE_1\n");
 	size+=1;
+	rm();
 	break;
       case RM_TABLE_2_BYTE:
 	printf ("\tMOD = RM_TABLE_2_BYTE\n");
-	size+=3;
+	size+=2;
 	break;
       case RM_TABLE_2_WORD:
 	printf ("\tMOD = RM_TABLE_2_WORD\n");
@@ -79,7 +108,7 @@ namespace Lib86 {
       case REG:
 	printf ("\tMOD = REG\n");
 	m_second = (uint16_t*) getRegister(rm());
-	size++;
+	size+=1;
 	break;
       default:
 	std::cerr << "\tUnrecognized Mod field of " << std::bitset<8>(m_mod) << std::endl;

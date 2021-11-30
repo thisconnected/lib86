@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "interpreter.hpp"
+#include "types.hpp"
 
 
 namespace Lib86 {
@@ -14,7 +15,7 @@ namespace Lib86 {
     uint8_t opcode;
     const char* mnemonic;
     void (Interpreter::*handler)(Instruction&);
-    int size;
+    enum immidiate imm = no;
   };
   
   class Disassembler
@@ -23,6 +24,7 @@ namespace Lib86 {
   
   
     void build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&));
+    void build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&), enum immidiate imm);
     void build_opcode_table();
     
   public:

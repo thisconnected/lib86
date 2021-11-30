@@ -82,5 +82,12 @@ namespace Lib86 {
       opcode_table[op].mnemonic = mnemonic;
       opcode_table[op].handler = handler;
     }
+  void Disassembler::build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&),enum immidiate imm)
+    {
+      opcode_table[op].opcode = op;
+      opcode_table[op].mnemonic = mnemonic;
+      opcode_table[op].handler = handler;
+      opcode_table[op].imm = imm;
+    }
 
 }
