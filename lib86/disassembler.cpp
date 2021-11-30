@@ -25,7 +25,7 @@ namespace Lib86 {
     auto insn = new Instruction(instptr);
     auto opcode = *(uint8_t*)instptr;
     printf("Disassembler::run()\n"
-	   "\topcode  :\t%d\n"
+	   "\topcode  :\t%#x\n"
 	   "\tmnemonic:\t%s\n"
 	   "\tmode    :\t%s\n"
 	   "\thandler :\t%p\n",
@@ -38,12 +38,19 @@ namespace Lib86 {
 	assert("Unrecogonized opcode" && false);
       }
     auto funptr = opcode_table[opcode].handler; //this needs to actually ignore direction bit (we do that internally in instruction
+
+    if(opcode_table[opcode].imm != no)
+      {
+	printf("\t setting up immidiate value\n");
+	insn->set_imm(opcode_table[opcode].imm);
+      }
+
     (interpreter.*funptr)(*insn);
     //assert(false);
 
     if(opcode & 0b10000000)
       printf("calling %s with %d %d\n", opcode_table[opcode].mnemonic, insn->readFirstArgument<uint8_t>(),insn->readSecondArgument<uint8_t>());
-    return ip+insn->size;
+    return insn->size;
   }
 
   void Disassembler::disassembleAtPoint(void * memory)
