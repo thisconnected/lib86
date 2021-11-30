@@ -54,20 +54,7 @@ namespace Lib86 {
     //instruction point
     int16_t m_ip = 0;
 
-    struct Flags {
-      enum Flag
-	{
-	  CF = 0x0001,
-	  PF = 0x0004,
-	  AF = 0x0010,
-	  ZF = 0x0040,
-	  SF = 0x0080,
-	  TF = 0x0100,
-	  IF = 0x0200,
-	  DF = 0x0400,
-	  OF = 0x0800,
-	};
-    };
+    uint16_t flags_reg;
   
     void * memory;
   
@@ -115,6 +102,7 @@ namespace Lib86 {
     uint16_t * di() { return &m_spr.di.low_u16;}
     uint16_t * si() { return &m_spr.si.low_u16;}
     uint16_t * sp() { return &m_spr.sp.low_u16;}
+    uint16_t * flags() { return &flags_reg;}
 
 
     //SETTERS
