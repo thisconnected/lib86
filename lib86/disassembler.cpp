@@ -67,7 +67,6 @@ namespace Lib86 {
       //      build(0x04, "ADD", &Interpreter::ADD_byte);
       // build(0x50, "PUSH", &Interpreter::PUSH_word); //PUSH REG only
       // build(0x5a, "POP", &Interpreter::POP_word); //POP REG only
-      build(0x80, "ADD imm8", &Interpreter::ADD_byte,imm8);
       build(0xC6, "MOV imm8", &Interpreter::MOV_byte,imm8);
       build(0xC7, "MOV imm16", &Interpreter::MOV_word,imm16);
       build(0xC6, "MOV", &Interpreter::MOV_byte);
@@ -77,6 +76,8 @@ namespace Lib86 {
       build(0xCD, "INT", &Interpreter::INT_byte);
       build(0x74, "JE", &Interpreter::JE);
       build(0x75, "JNE", &Interpreter::JNE);
+      build(0x3a, "CMP", &Interpreter::CMP_byte);
+      build(0x80, "ADD/CMP imm8", &Interpreter::ADDCMP_imm,imm8);
     }
   void Disassembler::build(uint8_t op, const char * mnemonic , void (Interpreter::*handler)(Instruction&))
     {

@@ -132,8 +132,18 @@ void Interpreter::ADD_word(Instruction& insn)
 
   void Interpreter::CMP_byte(Instruction& insn)
   {
-    //TODO
-    assert("unimplemented instruction" && false);
+    printf("Interpreter::CMP_byte(%p)\n", &insn);
+
+    int8_t src1 = insn.readFirstArgument<int8_t>();
+    int8_t src2 = insn.readSecondArgument<int8_t>();
+
+    printf("\tComparing %#x to %#x\n",src1, src2);
+
+    int8_t temp = src1 - src2;
+    printf("\t%#x - %#x = %#x\n",src1,src2, temp);
+
+    flags_sub<int8_t>(insn.fakeCPU->flags(),src1,src2);
+
   }
   void Interpreter::MOV_byte(Instruction& insn)
   {
@@ -149,7 +159,7 @@ void Interpreter::ADD_word(Instruction& insn)
     printf("Interpreter::JE(%p)\n", &insn);
     if(*insn.fakeCPU->flags() & FLAG_ZERO)
       {
-	auto ip = insn.fakeCPU->ip();
+	int16_t ip = insn.fakeCPU->ip();
 	ip += insn.getByte(1);
 
 	printf("\tPrevious ip = %#x, new = %#x\n", insn.fakeCPU->ip(), ip);
@@ -165,14 +175,34 @@ void Interpreter::ADD_word(Instruction& insn)
     if(!(*insn.fakeCPU->flags() & FLAG_ZERO))
       {
 	auto ip = insn.fakeCPU->ip();
-	ip += insn.getByte(1);
+	ip += (int8_t) insn.getByte(1);
 
 	printf("\tPrevious ip = %#x, new = %#x\n", insn.fakeCPU->ip(), ip);
-	printf("\tjump of %d bytes\n", insn.getByte(1));
+	printf("\tjump of %d bytes\n", (int8_t) insn.getByte(1));
 	insn.fakeCPU->set_ip(ip);
       }
     //HACK
     insn.size = 2;
+  }
+
+  void Interpreter::ADDCMP_imm(Instruction& insn)
+  {
+    //insn.populate();
+    printf("Interpreter::ADDCMP_imm() with reg = %d\n",insn.reg());
+    if(insn.reg() == 0)
+      {
+	printf("\tusing ADD_byte\n");
+	ADD_byte(insn);
+      }
+    else if(insn.reg() == 7)
+      {
+	printf("\tusing CMP_byte\n");
+	CMP_byte(insn);
+      }
+    else
+      assert(insn.reg() && false);
+
+    return;
   }
 
 

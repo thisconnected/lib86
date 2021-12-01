@@ -26,6 +26,7 @@ namespace Lib86 {
     void CMP_byte(Instruction&);
     void JE(Instruction&);
     void JNE(Instruction&);
+    void ADDCMP_imm(Instruction&);
   };
 
 
