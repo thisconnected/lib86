@@ -31,6 +31,9 @@ namespace Lib86 {
   void Instruction::work_imm()
   {
     printf("Instruction::work_imm() setting up immidiate value of ");
+
+    m_first = m_second;
+
     if(imm == imm8)
       {
 	size+=1;
@@ -95,7 +98,6 @@ namespace Lib86 {
       case RM_TABLE_1:
 	printf ("\tMOD = RM_TABLE_1\n");
 	size+=1;
-	rm();
 	break;
       case RM_TABLE_2_BYTE:
 	printf ("\tMOD = RM_TABLE_2_BYTE\n");

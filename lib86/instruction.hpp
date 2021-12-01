@@ -34,9 +34,8 @@ namespace Lib86 {
 
     bool word() { return  *(uint8_t*)m_instruction_ptr & 0b00000001 ? true : false ;};
     bool direction();
-    uint8_t mod();
-    uint8_t reg();
-    uint8_t rm();
+
+
     void populate();
     void* getRegister(uint8_t REG);
     void work_imm();
@@ -57,8 +56,11 @@ namespace Lib86 {
       *m_first = 0xFF00;
       *m_second = 0x00DD;
     };
-    
-    
+
+    //needs to be public because of special opcodes
+    uint8_t rm();
+    uint8_t mod();
+    uint8_t reg();
   };
 
   template <typename t>

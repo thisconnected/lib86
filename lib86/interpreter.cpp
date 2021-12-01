@@ -11,7 +11,7 @@ namespace Lib86 {
 
   template <typename t> inline void flags_add(uint16_t* flags, t first, t second)
   {
-    printf("\tflags_add(%d, %d)\n",first,second);
+    printf("\t\tflags_add(%d, %d)\n",first,second);
     //TODO
     *flags = 0x0; //should clean only arithmetic flags
 
@@ -54,7 +54,7 @@ void Interpreter::ADD_byte(Instruction& insn)
   flags_add<int8_t>(insn.fakeCPU->flags(), src1 ,src2);
   printf("\tADD %d + %d = %d\n", src1,src2,dest);
 
-  insn.writeFirstArgument<uint8_t>(dest);
+  insn.writeSecondArgument<int8_t>(dest);
 }
 
   
@@ -70,7 +70,7 @@ void Interpreter::ADD_word(Instruction& insn)
   flags_add<int16_t>(insn.fakeCPU->flags(), src1, src2);
 
   printf("ADD %d + %d = %d ", src1,src2,dest);
-  insn.writeFirstArgument<uint16_t>(dest);
+  insn.writeSecondArgument<int16_t>(dest);
 }
 
 
