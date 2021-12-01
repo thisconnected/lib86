@@ -24,7 +24,23 @@ namespace Lib86 {
       *flags |= FLAG_SIGN;
     fflush(stdout);
 
-    printf("flags: %#x\n", *flags);
+    printf("\t\tflags: %#x\n", *flags);
+  }
+  template <typename t> inline void flags_sub(uint16_t* flags, t first, t second)
+  {
+    printf("\t\tflags_del(%d, %d)\n",first,second);
+    *flags = 0x0; //should clean only arithmetic flags
+
+    if((first-second)==0)
+	*flags = *flags | FLAG_ZERO;
+    t diff = std::numeric_limits<t>::max() + first; //nie wiem
+    if(diff < second)
+      *flags |= FLAG_OVERFLOW;
+    if((first-second) < 0)
+      *flags |= FLAG_SIGN;
+    fflush(stdout);
+
+    printf("\t\flags: %#x\n", *flags);
   }
 
 void Interpreter::ADD_byte(Instruction& insn)
