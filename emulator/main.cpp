@@ -9,13 +9,16 @@ int main(int argc, char **argv)
 
   Lib86::CPU cpu;
   
-  cpu.dump_decimal();
-  cpu.dump();
+  //cpu.dump_decimal();
+  //cpu.dump();
 
-  test(&cpu);
+  //test(&cpu);
   auto ip = cpu.ip();
   printf("readAt 0x%2x = %d\nreadAt 0x%2x = %d\n", ip, cpu.readAt<uint8_t>(ip), ip+1, cpu.readAt<uint8_t>(ip+1));
   //cpu.dumpmemory(0x100,0x80);
+  //cpu.dump();
+
+  //for(int i=0;i<100;i++)0
   while(true)
     {
       cpu.dump();

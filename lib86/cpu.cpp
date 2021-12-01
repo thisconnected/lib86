@@ -7,6 +7,8 @@
 #include "types.hpp"
 #include "flags.hpp"
 
+#include <unistd.h>
+
 namespace Lib86
 {
   CPU * Instruction::fakeCPU = nullptr;
@@ -54,18 +56,25 @@ namespace Lib86
   void CPU::example()
   {
     m_spr.sp.low_u16 = 0xff00;
-    set_ah(50);
+    set_ax(0xffff);
     set_bx(0xFFFF);
-    set_cx(500);
-    set_dx(0x1234);
+    set_cx(0xffff);
+    set_dx(0xffff);
     initdos("../tests/test.com");
+    dumpmemory(0,1000);
   }
   
   bool CPU::initdos(std::string filename)
   {
+    char tempstr[1024];
+    getcwd(tempstr, sizeof(tempstr));
+    printf("CWD: %s\n",tempstr);
+
     std::cout << "initdos\n";
     memory = malloc(MAXMEM);
     m_ip = 0x0100; //entry point
+
+    printf("memory at %p\n", memory);
     if(memory==nullptr)
       return false;
     //here mmap the executable at 0100h for dos
@@ -77,21 +86,18 @@ namespace Lib86
 	return false;
       }
     
-    auto pointer = mmap(pointerAtOffset<void>(ip()), 64*100, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+    auto* pointer = mmap(pointerAtOffset<void>(ip()), 64*100, PROT_READ | PROT_WRITE | MAP_FIXED, MAP_PRIVATE, fd, 0);
+
+    printf("map at %p\n",pointer);
 
     if(pointer==MAP_FAILED)
       {
 	perror("mmap");
 	return false;
       }
-    
-    
-    uint8_t * temp = (uint8_t*) memory;
-    temp+=m_ip;
-    for(int i=0; i<10;i++)
-      {
-	*temp++ = 0x00;
-      }
+
+    //TODO this is bad;
+    memory = pointer;
     
     return true;
   }
@@ -133,6 +139,7 @@ namespace Lib86
 
   void CPU::next()
   {
+    printf("CPU::next()\n");
     auto value = disassembler.run(ip(),pointerAtOffset<void>(ip()),interpreter);
     value += ip();
     printf("CPU::next() setting ip to %#x\n", value);
