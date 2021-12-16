@@ -1,5 +1,7 @@
 add_executable(emulator main.cpp)
 
+add_test(basic emulator ${CMAKE_SOURCE_DIR}/tests/test.com)
+
 add_dependencies(
   emulator
   lib86

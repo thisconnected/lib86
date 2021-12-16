@@ -6,6 +6,6 @@ mkdir build
 cd build
 cmake .. -G Ninja
 ninja
-ninja run
+ctest --output-on-failure
 
 set +o errexit

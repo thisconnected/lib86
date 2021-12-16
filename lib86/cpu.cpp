@@ -60,17 +60,16 @@ namespace Lib86
     set_bx(0xFFFF);
     set_cx(0xffff);
     set_dx(0xffff);
-    initdos("../tests/test.com");
-    dumpmemory(0,1000);
   }
   
   bool CPU::initdos(std::string filename)
   {
+    std::cout << "initdos\n";
     char tempstr[1024];
     getcwd(tempstr, sizeof(tempstr));
     printf("CWD: %s\n",tempstr);
+    std::cout << "loading file: " << filename << "\n";
 
-    std::cout << "initdos\n";
     memory = malloc(MAXMEM);
     m_ip = 0x0100; //entry point
 
@@ -78,12 +77,12 @@ namespace Lib86
     if(memory==nullptr)
       return false;
     //here mmap the executable at 0100h for dos
-
+    fflush(stdout);
     auto fd = open(filename.c_str(), O_RDONLY);
     if(fd == -1)
       {
 	perror("open");
-	return false;
+	assert(false && "open");
       }
     
     auto* pointer = mmap(pointerAtOffset<void>(ip()), 64*100, PROT_READ | PROT_WRITE | MAP_FIXED, MAP_PRIVATE, fd, 0);
@@ -99,6 +98,8 @@ namespace Lib86
     //TODO this is bad;
     memory = pointer;
     
+    dumpmemory(0,1000);
+
     return true;
   }
 

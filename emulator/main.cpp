@@ -1,5 +1,6 @@
 #include "cpu.hpp"
 #include <iostream>
+#include <assert.h>
 
 void test(Lib86::CPU * );
 
@@ -7,8 +8,20 @@ int main(int argc, char **argv)
 {
   std::cout << argc << argv << std::endl;
 
+  std::string filename;
+
+  if(argc > 1)
+    {
+      printf("reading from file %s\n", argv[1]);
+
+      filename = argv[1];
+    }
+  else
+    assert(false && "no file specified");
+
   Lib86::CPU cpu;
   
+  cpu.initdos(filename);
   //cpu.dump_decimal();
   //cpu.dump();
 
