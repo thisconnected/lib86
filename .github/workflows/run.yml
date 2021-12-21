@@ -20,7 +20,7 @@ jobs:
     - name: "Install Ubuntu dependencies"
       run: |
         sudo apt-get update
-        sudo apt-get install ninja-build qt5-dev
+        sudo apt-get install ninja-build qtbase5-dev
       
       
     - name: Create Build Environment
