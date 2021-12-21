@@ -1,27 +1,45 @@
 #include "cpu.hpp"
 #include <iostream>
 #include <assert.h>
+#include <QCommandLineParser>
+#include <QString>
+
+struct globalOptions
+{
+  bool enableGUI = false;
+
+
+} options;
 
 void test(Lib86::CPU * );
 
 int main(int argc, char **argv)
 {
-  std::cout << argc << argv << std::endl;
+  QCoreApplication app(argc, argv);
+  QCoreApplication::setApplicationName("Lib86");
+  QCommandLineParser parser;
+  parser.setApplicationDescription("8086 Emulator");
+  parser.addHelpOption();
+  parser.addVersionOption();
+  parser.addPositionalArgument("binary", QCoreApplication::translate("main", "DOS executable to use"));
+  //gui
+  QCommandLineOption useGUIoption("g", QCoreApplication::translate("main", "Use GUI"));
+  parser.addOption(useGUIoption);
 
-  std::string filename;
 
-  if(argc > 1)
-    {
-      printf("reading from file %s\n", argv[1]);
+  parser.process(app);
 
-      filename = argv[1];
-    }
-  else
-    assert(false && "no file specified");
+  options.enableGUI = parser.isSet(useGUIoption);
+
+  const QStringList args = parser.positionalArguments();
+
+  if(args.isEmpty())
+    parser.showHelp(-1);
 
   Lib86::CPU cpu;
+
   
-  cpu.initdos(filename);
+  cpu.initdos(args.at(0).toStdString());
   //cpu.dump_decimal();
   //cpu.dump();
 

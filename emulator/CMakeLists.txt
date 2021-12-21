@@ -17,5 +17,9 @@ target_link_libraries(
   emulator
   lib86
   )
+target_link_libraries(
+  emulator
+  Qt5::Core
+  )
 
 

@@ -22,6 +22,9 @@ add_compile_options(-g)
 add_compile_options(-Wextra)
 #add_compile_options(-fsanitize=undefined)
 
+find_package(Qt5 COMPONENTS Core REQUIRED)
+
+
 # add the executable
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/lib86)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/emulator)
