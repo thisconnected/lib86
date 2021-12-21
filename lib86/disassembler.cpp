@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <cassert>
 #include "instruction.hpp"
+#include <memory>
 
 namespace Lib86 {
 
@@ -22,7 +23,7 @@ namespace Lib86 {
 
   uint16_t Disassembler::run(uint16_t ip, void * instptr, Interpreter& interpreter)
   {
-    auto insn = new Instruction(instptr);
+    std::unique_ptr<Instruction> insn(new Instruction(instptr));
     auto opcode = *(uint8_t*)instptr;
     printf("Disassembler::run()\n"
 	   "\topcode  :\t%#x\n"

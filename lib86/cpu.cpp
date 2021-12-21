@@ -64,6 +64,7 @@ namespace Lib86
   
   bool CPU::initdos(std::string filename)
   {
+    //TODO: actually map .com files AT 100h not 100h of 0's
     std::cout << "initdos\n";
     char tempstr[1024];
     getcwd(tempstr, sizeof(tempstr));
