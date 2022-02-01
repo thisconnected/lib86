@@ -124,7 +124,6 @@ void Interpreter::ADD_word(Instruction& insn)
 
     printf("Interpreter::MOV_word(%p)\n", &insn);
     uint16_t src = insn.readFirstArgument<uint16_t>();
-    uint16_t dest = insn.readSecondArgument<uint16_t>();
 
     insn.writeSecondArgument<uint16_t>(src);
 
@@ -203,6 +202,21 @@ void Interpreter::ADD_word(Instruction& insn)
       assert(insn.reg() && false);
 
     return;
+  }
+
+
+  void Interpreter::XOR_byte(Instruction& insn)
+  {
+    printf("Interpreter::XOR_byte(%p)\n", &insn);
+    int8_t src1 = insn.readFirstArgument<int8_t>();
+    int8_t src2 = insn.readSecondArgument<int8_t>();
+
+    int8_t dest = src1 & src2;
+
+    flags_add<int8_t>(insn.fakeCPU->flags(), src1 ,src2);
+    printf("\tXOR %#x & %#x = %#x\n", src1,src2,dest);
+
+    insn.writeSecondArgument<int8_t>(dest);
   }
 
 
